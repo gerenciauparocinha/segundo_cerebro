@@ -328,6 +328,28 @@ body{font-family:'Literata',Georgia,serif;background:var(--bg);color:var(--text)
 #file-drop{border:2px dashed var(--border);border-radius:9px;padding:18px;text-align:center;color:var(--muted);font-size:.78rem;margin-top:5px;cursor:pointer;transition:all .15s}
 #file-drop:hover,#file-drop.over{border-color:var(--accent2);color:var(--accent2)}
 
+
+/* ─── PASSWORD SCREEN ─── */
+#password-screen{position:fixed;inset:0;background:var(--bg);z-index:900;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0}
+.pw-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:40px 36px;width:380px;max-width:92vw;position:relative;overflow:hidden;text-align:center}
+.pw-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent2),var(--accent),var(--accent3))}
+.pw-logo{font-size:3rem;margin-bottom:4px;display:block;filter:drop-shadow(0 0 14px rgba(110,231,183,.5));animation:pwFloat 3s ease-in-out infinite}
+@keyframes pwFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.pw-title{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:900;letter-spacing:-.03em;color:var(--text);margin-bottom:4px}
+.pw-title span{color:var(--accent)}
+.pw-sub{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--muted);margin-bottom:28px;letter-spacing:.04em}
+.pw-input-wrap{position:relative;margin-bottom:14px}
+#pw-input{width:100%;padding:12px 44px 12px 16px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.15em;outline:none;transition:border-color .2s;text-align:center}
+#pw-input:focus{border-color:var(--accent)}
+#pw-input.error{border-color:var(--danger);animation:shake .35s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.pw-toggle{position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;padding:2px}
+.pw-toggle:hover{color:var(--text)}
+#pw-btn{width:100%;padding:12px;background:var(--accent);border:none;border-radius:10px;color:#0a0b12;font-family:'Syne',sans-serif;font-size:.92rem;font-weight:800;cursor:pointer;transition:all .2s;letter-spacing:.02em}
+#pw-btn:hover{background:#5dd9a8;box-shadow:0 0 24px rgba(110,231,183,.3)}
+.pw-error-msg{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--danger);margin-top:8px;height:16px;transition:opacity .2s}
+.pw-footer{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--muted);margin-top:20px}
+
 /* ─── ONBOARDING ─── */
 #onboarding{position:fixed;inset:0;background:rgba(0,0,0,.92);backdrop-filter:blur(12px);z-index:500;display:flex;align-items:center;justify-content:center}
 .onb-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:32px;width:480px;max-width:92vw;position:relative;overflow:hidden}
@@ -412,6 +434,25 @@ body.theme-light #toast{box-shadow:0 10px 30px rgba(0,0,0,.12)}
 </head>
 <body>
 
+
+<!-- PASSWORD SCREEN -->
+<div id="password-screen">
+  <div class="pw-card">
+    <span class="pw-logo">🧠</span>
+    <div class="pw-title">Segundo <span>Cérebro</span></div>
+    <div class="pw-sub">🥇 Plano Profissional · Acesso restrito</div>
+    <div class="pw-input-wrap">
+      <input type="password" id="pw-input" placeholder="••••••" maxlength="32"
+             onkeydown="if(event.key==='Enter')checkPassword()"
+             oninput="document.getElementById('pw-error').textContent=''"/>
+      <button class="pw-toggle" onclick="togglePwVisibility()" id="pw-eye">👁</button>
+    </div>
+    <button id="pw-btn" onclick="checkPassword()">Entrar →</button>
+    <div class="pw-error-msg" id="pw-error"></div>
+    <div class="pw-footer">🔒 Acesso protegido por senha</div>
+  </div>
+</div>
+
 <!-- ONBOARDING -->
 <div id="onboarding">
   <div class="onb-card">
@@ -449,7 +490,7 @@ body.theme-light #toast{box-shadow:0 10px 30px rgba(0,0,0,.12)}
         <option value="anthropic">Anthropic (Claude)</option>
       </select>
       <label>API Key</label>
-      <input type="password" id="onb-key" placeholder="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" style="width:100%;padding:8px 11px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Literata',serif;font-size:.83rem;outline:none;margin-bottom:5px"/>
+      <input type="password" id="onb-key" placeholder="Cole sua API key aqui..." style="width:100%;padding:8px 11px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Literata',serif;font-size:.83rem;outline:none;margin-bottom:5px"/>
       <div style="font-size:.7rem;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:16px">Salva apenas localmente. Nunca enviada para servidores externos.</div>
       <div class="onb-btns">
         <button class="onb-btn-skip" onclick="onbPrev()">← Voltar</button>
@@ -832,6 +873,48 @@ body.theme-light #toast{box-shadow:0 10px 30px rgba(0,0,0,.12)}
 <div id="toast"></div>
 
 <script>
+
+// ═══════════════════════════════════
+//  PASSWORD GATE
+// ═══════════════════════════════════
+const APP_PASSWORD = 'Motta'; // ← altere aqui para mudar a senha
+
+function checkPassword() {
+  const val = document.getElementById('pw-input').value;
+  const input = document.getElementById('pw-input');
+  const errEl = document.getElementById('pw-error');
+  if (val === APP_PASSWORD) {
+    sessionStorage.setItem('sc_auth', '1');
+    const screen = document.getElementById('password-screen');
+    screen.style.transition = 'opacity .4s ease';
+    screen.style.opacity = '0';
+    setTimeout(() => { screen.style.display = 'none'; }, 400);
+  } else {
+    input.classList.add('error');
+    errEl.textContent = '❌ Senha incorreta. Tente novamente.';
+    document.getElementById('pw-input').value = '';
+    setTimeout(() => input.classList.remove('error'), 400);
+  }
+}
+
+function togglePwVisibility() {
+  const inp = document.getElementById('pw-input');
+  const eye = document.getElementById('pw-eye');
+  if (inp.type === 'password') { inp.type = 'text'; eye.textContent = '🙈'; }
+  else { inp.type = 'password'; eye.textContent = '👁'; }
+}
+
+(function() {
+  if (sessionStorage.getItem('sc_auth') === '1') {
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('password-screen').style.display = 'none';
+    });
+  } else {
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => document.getElementById('pw-input').focus(), 100);
+    });
+  }
+})();
 
 // ═══════════════════════════════════
 //  LICENSE / PLAN SYSTEM
@@ -1829,8 +1912,57 @@ function exportHTML(){const note=getCurrentNote();if(!note)return;const html=`<!
 function exportAllZIP(){const all=notes.map(n=>`# ${n.title}\n\n${n.tags.map(t=>'#'+t).join(' ')}\n\n${n.body}`).join('\n\n---\n\n');downloadFile(all,'segundo-cerebro-vault.md','text/markdown');closeExportModal();toast('✅ Vault exportado!');}
 function openGdriveModal(){document.getElementById('gdrive-modal').classList.add('open');}
 function closeGdriveModal(){document.getElementById('gdrive-modal').classList.remove('open');}
-function exportJSON(){const data=JSON.stringify(notes,null,2);downloadFile(data,`sc-backup-${new Date().toISOString().slice(0,10)}.json`,'application/json');toast('✅ JSON exportado!');}
-function importJSON(){const raw=document.getElementById('gdrive-import-text').value.trim();if(!raw)return toast('Cole o JSON primeiro');try{const imported=JSON.parse(raw);if(!Array.isArray(imported))throw new Error('Formato inválido');imported.forEach(in_note=>{if(!notes.find(n=>n.id===in_note.id))notes.unshift(in_note)});save();renderNotesList();renderTagsSidebar();updateCounts();closeGdriveModal();toast(`✅ ${imported.length} notas restauradas!`);}catch(e){toast('❌ JSON inválido: '+e.message,4000);}}
+function exportJSON(){
+  const backup = {
+    version: 3,
+    exportedAt: new Date().toISOString(),
+    notas: notes,
+    kanban: kanban
+  };
+  downloadFile(JSON.stringify(backup,null,2),`sc-backup-${new Date().toISOString().slice(0,10)}.json`,'application/json');
+  toast('✅ Backup exportado (notas + kanban)!');
+}
+function importJSON(){
+  const raw=document.getElementById('gdrive-import-text').value.trim();
+  if(!raw)return toast('Cole o JSON primeiro');
+  try{
+    const parsed=JSON.parse(raw);
+    let importedNotes=[], importedKanban=null, msg='';
+
+    // New structured format: {version, notas, kanban}
+    if(parsed && parsed.notas && Array.isArray(parsed.notas)){
+      importedNotes = parsed.notas;
+      importedKanban = parsed.kanban || null;
+      msg = `✅ ${importedNotes.length} notas + kanban restaurados!`;
+    }
+    // Old format: plain array of notes
+    else if(Array.isArray(parsed)){
+      importedNotes = parsed;
+      msg = `✅ ${importedNotes.length} notas restauradas!`;
+    }
+    else {
+      throw new Error('Formato não reconhecido');
+    }
+
+    // Merge notes (skip duplicates by id)
+    importedNotes.forEach(n=>{if(!notes.find(x=>x.id===n.id))notes.unshift(n);});
+
+    // Restore kanban if present (merge columns)
+    if(importedKanban && importedKanban.cols){
+      importedKanban.cols.forEach(col=>{
+        const existing=kanban.cols.find(c=>c.id===col.id);
+        if(!existing) kanban.cols.push(col);
+        else {
+          col.cards.forEach(card=>{if(!existing.cards.find(c=>c.id===card.id))existing.cards.push(card);});
+        }
+      });
+    }
+
+    save();renderNotesList();renderTagsSidebar();updateCounts();
+    if(currentView==='kanban')renderKanban();
+    closeGdriveModal();toast(msg);
+  }catch(e){toast('❌ Erro ao importar: '+e.message,4000);}
+}
 
 // ═══════════════════════════════════
 //  AUDIO
