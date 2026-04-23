@@ -2,7 +2,25 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Segundo Cérebro"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="application-name" content="Segundo Cérebro"/>
+<meta name="theme-color" content="#0a0b12"/>
+<meta name="description" content="O app de notas com IA que pensa com você. Plano Profissional."/>
+<meta name="msapplication-TileColor" content="#0a0b12"/>
+<meta name="msapplication-tap-highlight" content="no"/>
+
+<!-- PWA Manifest inline via data URI -->
+<link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22Segundo%20C%C3%A9rebro%22%2C%22short_name%22%3A%22S.C%C3%A9rebro%22%2C%22description%22%3A%22O%20app%20de%20notas%20com%20IA%20que%20pensa%20com%20voc%C3%AA%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230a0b12%22%2C%22theme_color%22%3A%22%230a0b12%22%2C%22orientation%22%3A%22portrait-primary%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%2520viewBox%3D'0%25200%2520100%2520100'%253E%253Crect%2520width%3D'100'%2520height%3D'100'%2520rx%3D'22'%2520fill%3D'%25230a0b12'%2F%253E%253Ctext%2520y%3D'.9em'%2520font-size%3D'80'%2520x%3D'10'%253E%25F0%259F%25A7%25A0%253C%2Ftext%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D"/>
+
+<!-- Apple touch icon (SVG inline as data URI) -->
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230a0b12'/><text y='.9em' font-size='80' x='10'>🧠</text></svg>"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230a0b12'/><text y='.9em' font-size='80' x='10'>🧠</text></svg>"/>
+
+
 <title>🧠 Segundo Cérebro — Profissional</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=Literata:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
@@ -22,6 +40,32 @@ body{font-family:'Literata',Georgia,serif;background:var(--bg);color:var(--text)
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px}
+
+
+/* ─── PWA INSTALL BANNER ─── */
+#pwa-banner{position:fixed;bottom:24px;right:24px;z-index:800;background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 32px rgba(0,0,0,.5);max-width:300px;transform:translateY(120px);opacity:0;transition:all .4s cubic-bezier(.4,0,.2,1)}
+#pwa-banner.show{transform:translateY(0);opacity:1}
+.pwa-banner-icon{font-size:1.8rem;flex-shrink:0;filter:drop-shadow(0 0 6px rgba(110,231,183,.4))}
+.pwa-banner-text{flex:1;min-width:0}
+.pwa-banner-title{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:2px}
+.pwa-banner-sub{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--muted);line-height:1.4}
+.pwa-banner-btns{display:flex;flex-direction:column;gap:5px;flex-shrink:0}
+.pwa-install-btn{padding:6px 12px;background:var(--accent);border:none;border-radius:7px;color:#0a0b12;font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;cursor:pointer;transition:all .15s;white-space:nowrap}
+.pwa-install-btn:hover{background:#5dd9a8}
+.pwa-dismiss-btn{padding:5px 12px;background:transparent;border:1px solid var(--border);border-radius:7px;color:var(--muted);font-family:'Syne',sans-serif;font-size:.68rem;cursor:pointer;transition:all .15s;text-align:center}
+.pwa-dismiss-btn:hover{color:var(--text);border-color:var(--border2)}
+
+/* iOS install hint modal */
+#ios-hint{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);z-index:900;display:none;align-items:flex-end;justify-content:center;padding:16px}
+#ios-hint.show{display:flex}
+.ios-hint-card{background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:22px;width:100%;max-width:360px;text-align:center}
+.ios-hint-title{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;color:var(--text);margin-bottom:8px}
+.ios-hint-steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin:14px 0}
+.ios-hint-step{display:flex;align-items:center;gap:10px;font-size:.8rem;color:var(--muted2);text-align:left}
+.ios-step-icon{font-size:1.2rem;width:28px;flex-shrink:0;text-align:center}
+.ios-step-key{font-family:'DM Mono',monospace;font-size:.68rem;background:var(--surface2);border:1px solid var(--border2);color:var(--accent);padding:2px 8px;border-radius:5px}
+.ios-hint-close{margin-top:14px;width:100%;padding:10px;background:var(--surface2);border:1px solid var(--border);border-radius:9px;color:var(--muted2);font-family:'Syne',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .15s}
+.ios-hint-close:hover{color:var(--text)}
 
 /* ─── SIDEBAR ─── */
 #sidebar{width:230px;min-width:230px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100vh;overflow:hidden;position:relative}
@@ -802,6 +846,7 @@ body.theme-light #toast{box-shadow:0 10px 30px rgba(0,0,0,.12)}
       <div class="export-opt" onclick="exportTXT()"><div class="export-opt-icon">📄</div><div class="export-opt-info"><div class="export-opt-title">Texto puro (.txt)</div><div class="export-opt-desc">Simples e compatível</div></div><span style="color:var(--muted);font-size:.8rem">↓</span></div>
       <div class="export-opt" onclick="exportHTML()"><div class="export-opt-icon">🌐</div><div class="export-opt-info"><div class="export-opt-title">HTML formatado</div><div class="export-opt-desc">Abre no navegador com estilos</div></div><span style="color:var(--muted);font-size:.8rem">↓</span></div>
       <div class="export-opt" onclick="exportAllZIP()"><div class="export-opt-icon">📦</div><div class="export-opt-info"><div class="export-opt-title">Vault completo (.md)</div><div class="export-opt-desc">Todas as notas em Markdown</div></div><span style="color:var(--muted);font-size:.8rem">↓</span></div>
+      <div class="export-opt" onclick="exportPDF()" style="border-color:rgba(248,113,113,.2)"><div class="export-opt-icon">🖨️</div><div class="export-opt-info"><div class="export-opt-title" style="color:#f87171">PDF timbrado</div><div class="export-opt-desc">Documento com logo, cabeçalho e rodapé</div></div><span style="color:var(--muted);font-size:.8rem">↓</span></div>
     </div>
     <div class="modal-btns"><button class="modal-btn modal-btn-cancel" onclick="closeExportModal()">Fechar</button></div>
   </div>
@@ -824,13 +869,36 @@ body.theme-light #toast{box-shadow:0 10px 30px rgba(0,0,0,.12)}
 <div class="modal-bg" id="gdrive-modal">
   <div class="modal">
     <h2>☁️ Backup & Restore</h2>
-    <p style="font-size:.8rem;color:var(--muted);line-height:1.6;margin-bottom:14px">Exporte um JSON completo das suas notas para backup, ou cole um JSON exportado anteriormente para restaurar.</p>
-    <label>Restaurar backup (cole o JSON)</label>
-    <textarea id="gdrive-import-text" style="height:90px;resize:vertical;font-family:'DM Mono',monospace;font-size:.7rem" placeholder='[{"id":"...","title":"...",...}]'></textarea>
-    <div class="modal-btns" style="flex-wrap:wrap;gap:7px">
+
+    <!-- EXPORT SECTION -->
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:12px">
+      <div style="font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:4px">📦 Exportar backup</div>
+      <div style="font-size:.75rem;color:var(--muted);line-height:1.5;margin-bottom:10px">Salva todas as notas e o kanban em um arquivo <span style="font-family:'DM Mono',monospace;color:var(--accent)">.json</span> no seu computador.</div>
+      <button class="modal-btn modal-btn-primary" style="width:100%;padding:10px" onclick="exportJSON()">⬇️ Baixar backup (.json)</button>
+    </div>
+
+    <!-- IMPORT SECTION -->
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:14px">
+      <div style="font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:4px">⬆️ Restaurar backup</div>
+      <div style="font-size:.75rem;color:var(--muted);line-height:1.5;margin-bottom:12px">Selecione o arquivo <span style="font-family:'DM Mono',monospace;color:var(--accent)">.json</span> exportado anteriormente. Notas e kanban são restaurados automaticamente.</div>
+
+      <div id="backup-drop"
+           onclick="document.getElementById('backup-file-input').click()"
+           ondragover="event.preventDefault();document.getElementById('backup-drop').style.borderColor='var(--accent)'"
+           ondragleave="document.getElementById('backup-drop').style.borderColor=''"
+           ondrop="handleBackupDrop(event)"
+           style="border:2px dashed var(--border);border-radius:8px;padding:22px 14px;text-align:center;cursor:pointer;transition:all .2s">
+        <div style="font-size:1.8rem;margin-bottom:6px">📂</div>
+        <div style="font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:3px">Clique ou arraste o arquivo aqui</div>
+        <div style="font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted)">Aceita: .json</div>
+      </div>
+      <input type="file" id="backup-file-input" accept=".json" style="display:none" onchange="handleBackupFile(event)"/>
+
+      <div id="backup-status" style="display:none;margin-top:10px;padding:10px 12px;border-radius:8px;font-size:.78rem;font-family:'DM Mono',monospace"></div>
+    </div>
+
+    <div class="modal-btns">
       <button class="modal-btn modal-btn-cancel" onclick="closeGdriveModal()">Fechar</button>
-      <button class="modal-btn modal-btn-cancel" onclick="exportJSON()">📦 Exportar JSON</button>
-      <button class="modal-btn modal-btn-primary" onclick="importJSON()">⬆️ Restaurar</button>
     </div>
   </div>
 </div>
@@ -866,6 +934,43 @@ body.theme-light #toast{box-shadow:0 10px 30px rgba(0,0,0,.12)}
       <button class="modal-btn modal-btn-cancel" onclick="closeUpgradeModal()">Fechar</button>
       <button class="modal-btn modal-btn-primary" onclick="closeUpgradeModal()">Ver Planos</button>
     </div>
+  </div>
+</div>
+
+
+<!-- PWA INSTALL BANNER -->
+<div id="pwa-banner">
+  <div class="pwa-banner-icon">🧠</div>
+  <div class="pwa-banner-text">
+    <div class="pwa-banner-title">Instalar como app</div>
+    <div class="pwa-banner-sub">Use sem barra de endereço,<br/>offline no celular e PC</div>
+  </div>
+  <div class="pwa-banner-btns">
+    <button class="pwa-install-btn" id="pwa-install-btn" onclick="triggerInstall()">Instalar</button>
+    <button class="pwa-dismiss-btn" onclick="dismissPwaBanner()">Agora não</button>
+  </div>
+</div>
+
+<!-- iOS INSTALL HINT -->
+<div id="ios-hint">
+  <div class="ios-hint-card">
+    <div style="font-size:2rem;margin-bottom:6px">🧠</div>
+    <div class="ios-hint-title">Instalar no iPhone / iPad</div>
+    <ul class="ios-hint-steps">
+      <li class="ios-hint-step">
+        <span class="ios-step-icon">1️⃣</span>
+        <span>Toque no botão <span class="ios-step-key">Compartilhar</span> (□↑) na barra do Safari</span>
+      </li>
+      <li class="ios-hint-step">
+        <span class="ios-step-icon">2️⃣</span>
+        <span>Role para baixo e toque em <span class="ios-step-key">Adicionar à Tela de Início</span></span>
+      </li>
+      <li class="ios-hint-step">
+        <span class="ios-step-icon">3️⃣</span>
+        <span>Confirme tocando em <span class="ios-step-key">Adicionar</span> no canto superior direito</span>
+      </li>
+    </ul>
+    <button class="ios-hint-close" onclick="closeIosHint()">Entendi ✓</button>
   </div>
 </div>
 
@@ -1910,6 +2015,274 @@ function exportMD(){const note=getCurrentNote();if(!note)return;const tags=note.
 function exportTXT(){const note=getCurrentNote();if(!note)return;downloadFile(`${note.title}\n${'='.repeat(note.title.length)}\n\n${note.body}`,`${note.title||'nota'}.txt`,'text/plain');closeExportModal();toast('✅ Exportado como .txt!');}
 function exportHTML(){const note=getCurrentNote();if(!note)return;const html=`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"/><title>${note.title}</title><style>body{font-family:Georgia,serif;max-width:700px;margin:60px auto;padding:0 24px;line-height:1.8;color:#222}h1{border-bottom:2px solid #eee;padding-bottom:12px}.tags{color:#666;font-size:.85rem;margin-bottom:24px}.body{white-space:pre-wrap}</style></head><body><h1>${note.title}</h1><div class="tags">${note.tags.map(t=>'#'+t).join(' ')}</div><div class="body">${note.body}</div></body></html>`;downloadFile(html,`${note.title||'nota'}.html`,'text/html');closeExportModal();toast('✅ Exportado como .html!');}
 function exportAllZIP(){const all=notes.map(n=>`# ${n.title}\n\n${n.tags.map(t=>'#'+t).join(' ')}\n\n${n.body}`).join('\n\n---\n\n');downloadFile(all,'segundo-cerebro-vault.md','text/markdown');closeExportModal();toast('✅ Vault exportado!');}
+
+function exportPDF() {
+  const note = getCurrentNote();
+  if (!note) return;
+  closeExportModal();
+
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' });
+  const timeStr = now.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
+  const tagsStr = note.tags.map(t => '#' + t).join('  ');
+  const bodyLines = note.body.replace(/</g,'&lt;').replace(/>/g,'&gt;').split('\n');
+
+  // Format body: bold **text**, italic *text*, headers #
+  function formatLine(line) {
+    line = line
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      .replace(/`(.+?)`/g, '<code style="font-family:monospace;font-size:.85em;background:#f0f0f0;padding:1px 5px;border-radius:3px">$1</code>');
+    if (/^### /.test(line)) return '<h3 style="font-size:1rem;font-weight:700;margin:14px 0 6px;color:#1e2030">' + line.replace(/^### /,'') + '</h3>';
+    if (/^## /.test(line)) return '<h2 style="font-size:1.1rem;font-weight:700;margin:16px 0 7px;color:#1e2030">' + line.replace(/^## /,'') + '</h2>';
+    if (/^# /.test(line)) return '<h1 style="font-size:1.2rem;font-weight:800;margin:18px 0 8px;color:#1e2030">' + line.replace(/^# /,'') + '</h1>';
+    if (/^- /.test(line)) return '<li style="margin-bottom:4px">' + line.replace(/^- /,'') + '</li>';
+    if (line.trim() === '') return '<div style="height:10px"></div>';
+    return '<p style="margin:0 0 8px;line-height:1.8">' + line + '</p>';
+  }
+
+  const bodyHTML = bodyLines.map(formatLine).join('\n');
+
+  const html = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<title>${note.title} — Segundo Cérebro</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Literata:wght@300;400;500&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box }
+  html { font-size: 14px }
+  body {
+    font-family: 'Literata', Georgia, serif;
+    color: #2d3147;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* ── TOPO BRANCO COM LOGO ── */
+  .doc-header {
+    background: #ffffff;
+    padding: 22px 48px 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .header-logo {
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+  .header-name {
+    font-family: 'Syne', sans-serif;
+  }
+  .header-name-main {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -.02em;
+    color: #1e2030;
+    line-height: 1;
+  }
+  .header-name-main span { color: #059669 }
+  .header-name-sub {
+    font-size: .58rem;
+    color: #94a3b8;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+  .header-meta {
+    text-align: right;
+    font-family: 'Syne', sans-serif;
+    font-size: .7rem;
+    color: #94a3b8;
+    padding-bottom: 4px;
+  }
+  .header-meta strong {
+    display: block;
+    color: #475569;
+    font-size: .72rem;
+    margin-bottom: 1px;
+  }
+
+  /* ── LINHA COLORIDA ── */
+  .header-rule {
+    height: 3px;
+    background: linear-gradient(90deg, #059669 0%, #6ee7b7 40%, #818cf8 75%, #fb923c 100%);
+    margin: 10px 48px 0;
+    border-radius: 99px;
+  }
+
+  /* ── TÍTULO DA NOTA ── */
+  .note-header {
+    padding: 28px 48px 16px;
+    border-bottom: 1px solid #f0f2f7;
+  }
+  .note-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.45rem;
+    font-weight: 800;
+    letter-spacing: -.03em;
+    color: #1e2030;
+    margin-bottom: 10px;
+    line-height: 1.25;
+  }
+  .note-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    font-size: .7rem;
+    color: #94a3b8;
+    font-family: 'Syne', sans-serif;
+  }
+  .note-meta-item { display: flex; align-items: center; gap: 4px }
+  .note-meta-item strong { color: #475569; font-weight: 600 }
+  .tag-pill {
+    display: inline-block;
+    background: #f0f4ff;
+    border: 1px solid #dde3f8;
+    color: #4f46e5;
+    font-family: monospace;
+    font-size: .66rem;
+    padding: 2px 8px;
+    border-radius: 99px;
+    margin-right: 4px;
+    margin-top: 2px;
+  }
+
+  /* ── CORPO ── */
+  .note-body {
+    flex: 1;
+    padding: 24px 48px 32px;
+    font-size: .92rem;
+    line-height: 1.9;
+    color: #2d3147;
+    font-weight: 300;
+  }
+  .note-body p { margin-bottom: 8px }
+  .note-body h1 { font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;color:#1e2030;margin:18px 0 7px }
+  .note-body h2 { font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:#1e2030;margin:14px 0 6px }
+  .note-body h3 { font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;color:#334155;margin:12px 0 5px }
+  .note-body li { margin-bottom:5px; margin-left:18px }
+  .note-body ul { margin-bottom:10px }
+
+  /* ── NOTAS VINCULADAS ── */
+  .linked-section {
+    margin: 0 48px 24px;
+    padding: 12px 16px;
+    background: #f8f9ff;
+    border-left: 3px solid #818cf8;
+    border-radius: 0 6px 6px 0;
+  }
+  .linked-title {
+    font-family: 'Syne', sans-serif;
+    font-size: .68rem;
+    font-weight: 700;
+    color: #4f46e5;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: 7px;
+  }
+  .linked-item { font-size: .8rem; color: #4f46e5; padding: 2px 0 }
+
+  /* ── LINHA + RODAPÉ ── */
+  .footer-rule {
+    height: 2px;
+    background: linear-gradient(90deg, #059669 0%, #6ee7b7 40%, #818cf8 75%, #fb923c 100%);
+    margin: 0 48px;
+    border-radius: 99px;
+  }
+  .doc-footer {
+    background: #ffffff;
+    color: #94a3b8;
+    padding: 10px 48px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: .63rem;
+    font-family: 'Syne', sans-serif;
+  }
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 800;
+    font-size: .72rem;
+    color: #1e2030;
+  }
+  .footer-brand span { color: #059669 }
+  .footer-tagline { color: #94a3b8; font-style: italic }
+  .footer-right { color: #94a3b8; text-align: right }
+
+  @media print {
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact }
+    .header-rule, .footer-rule { -webkit-print-color-adjust: exact; print-color-adjust: exact }
+  }
+</style>
+</head>
+<body>
+
+<!-- CABEÇALHO: logo + linha colorida -->
+<div class="doc-header">
+  <div class="header-brand">
+    <div class="header-logo">🧠</div>
+    <div class="header-name">
+      <div class="header-name-main">Segundo <span>Cérebro</span></div>
+      <div class="header-name-sub">O app de notas que pensa com você</div>
+    </div>
+  </div>
+  <div class="header-meta">
+    <strong>Documento exportado por MOTTA</strong>
+    ${dateStr} às ${timeStr}
+  </div>
+</div>
+<div class="header-rule"></div>
+
+<!-- TÍTULO E META DA NOTA -->
+<div class="note-header">
+  <div class="note-title">${note.title || 'Sem título'}</div>
+  <div class="note-meta-row">
+    <div class="note-meta-item">📅 <strong>Criada:</strong>&nbsp;${new Date(note.created).toLocaleDateString('pt-BR', {day:'2-digit',month:'long',year:'numeric'})}</div>
+    <div class="note-meta-item">✏️ <strong>Atualizada:</strong>&nbsp;${new Date(note.updated).toLocaleDateString('pt-BR', {day:'2-digit',month:'long',year:'numeric'})}</div>
+    ${note.type === 'postmortem' ? '<div class="note-meta-item">🔍 <strong>Tipo:</strong>&nbsp;Post Mortem</div>' : ''}
+  </div>
+  ${tagsStr ? `<div style="margin-top:10px">${note.tags.map(t => `<span class="tag-pill">#${t}</span>`).join('')}</div>` : ''}
+</div>
+
+<!-- CORPO -->
+<div class="note-body">
+  ${bodyHTML}
+</div>
+
+${(note.links||[]).length > 0 ? `
+<div class="linked-section">
+  <div class="linked-title">🔗 Notas Vinculadas</div>
+  ${(note.links||[]).map(id => { const n = notes.find(x => x.id === id); return n ? `<div class="linked-item">→ ${n.title || 'Sem título'}</div>` : ''; }).join('')}
+</div>` : ''}
+
+<!-- RODAPÉ: linha colorida + texto -->
+<div class="footer-rule"></div>
+<div class="doc-footer">
+  <div class="footer-brand">🧠 Segundo <span>Cérebro</span></div>
+  <div class="footer-tagline">"O APP de notas que pensa com você"</div>
+  <div class="footer-right">segundo-cerebro.app · Plano Profissional 🥇</div>
+</div>
+
+<script>window.onload = () => { window.print(); }<\/script>
+</body>
+</html>`;
+
+  const win = window.open('', '_blank');
+  win.document.write(html);
+  win.document.close();
+  toast('🖨️ PDF pronto para imprimir!');
+}
 function openGdriveModal(){document.getElementById('gdrive-modal').classList.add('open');}
 function closeGdriveModal(){document.getElementById('gdrive-modal').classList.remove('open');}
 function exportJSON(){
@@ -1922,47 +2295,107 @@ function exportJSON(){
   downloadFile(JSON.stringify(backup,null,2),`sc-backup-${new Date().toISOString().slice(0,10)}.json`,'application/json');
   toast('✅ Backup exportado (notas + kanban)!');
 }
-function importJSON(){
-  const raw=document.getElementById('gdrive-import-text').value.trim();
-  if(!raw)return toast('Cole o JSON primeiro');
-  try{
-    const parsed=JSON.parse(raw);
-    let importedNotes=[], importedKanban=null, msg='';
-
-    // New structured format: {version, notas, kanban}
-    if(parsed && parsed.notas && Array.isArray(parsed.notas)){
-      importedNotes = parsed.notas;
-      importedKanban = parsed.kanban || null;
-      msg = `✅ ${importedNotes.length} notas + kanban restaurados!`;
-    }
-    // Old format: plain array of notes
-    else if(Array.isArray(parsed)){
-      importedNotes = parsed;
-      msg = `✅ ${importedNotes.length} notas restauradas!`;
-    }
-    else {
-      throw new Error('Formato não reconhecido');
-    }
-
-    // Merge notes (skip duplicates by id)
-    importedNotes.forEach(n=>{if(!notes.find(x=>x.id===n.id))notes.unshift(n);});
-
-    // Restore kanban if present (merge columns)
-    if(importedKanban && importedKanban.cols){
-      importedKanban.cols.forEach(col=>{
-        const existing=kanban.cols.find(c=>c.id===col.id);
-        if(!existing) kanban.cols.push(col);
-        else {
-          col.cards.forEach(card=>{if(!existing.cards.find(c=>c.id===card.id))existing.cards.push(card);});
-        }
-      });
-    }
-
-    save();renderNotesList();renderTagsSidebar();updateCounts();
-    if(currentView==='kanban')renderKanban();
-    closeGdriveModal();toast(msg);
-  }catch(e){toast('❌ Erro ao importar: '+e.message,4000);}
+function handleBackupFile(e) {
+  const file = e.target.files[0];
+  if (file) readBackupFile(file);
+  e.target.value = ''; // reset so same file can be selected again
 }
+
+function handleBackupDrop(e) {
+  e.preventDefault();
+  document.getElementById('backup-drop').style.borderColor = '';
+  const file = e.dataTransfer.files[0];
+  if (file) readBackupFile(file);
+}
+
+function readBackupFile(file) {
+  if (!file.name.endsWith('.json')) {
+    showBackupStatus('❌ Arquivo inválido. Selecione um arquivo .json', 'error');
+    return;
+  }
+  showBackupStatus('⏳ Lendo arquivo...', 'loading');
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      processImport(parsed);
+    } catch(err) {
+      showBackupStatus('❌ Arquivo corrompido ou inválido: ' + err.message, 'error');
+    }
+  };
+  reader.onerror = () => showBackupStatus('❌ Erro ao ler o arquivo.', 'error');
+  reader.readAsText(file);
+}
+
+function processImport(parsed) {
+  let importedNotes = [], importedKanban = null, msg = '';
+
+  // Novo formato estruturado: {version, notas, kanban}
+  if (parsed && parsed.notas && Array.isArray(parsed.notas)) {
+    importedNotes = parsed.notas;
+    importedKanban = parsed.kanban || null;
+    const exportDate = parsed.exportedAt ? new Date(parsed.exportedAt).toLocaleDateString('pt-BR') : '—';
+    msg = `✅ ${importedNotes.length} notas + kanban restaurados! (backup de ${exportDate})`;
+  }
+  // Formato antigo: array puro de notas
+  else if (Array.isArray(parsed)) {
+    importedNotes = parsed;
+    msg = `✅ ${importedNotes.length} notas restauradas! (formato antigo)`;
+  }
+  else {
+    showBackupStatus('❌ Formato não reconhecido. Use um backup exportado pelo Segundo Cérebro.', 'error');
+    return;
+  }
+
+  // Merge notas (ignora duplicatas por id)
+  let newNotes = 0;
+  importedNotes.forEach(n => {
+    if (!notes.find(x => x.id === n.id)) { notes.unshift(n); newNotes++; }
+  });
+
+  // Restaura kanban se presente
+  let newCards = 0;
+  if (importedKanban && importedKanban.cols) {
+    importedKanban.cols.forEach(col => {
+      const existing = kanban.cols.find(c => c.id === col.id);
+      if (!existing) { kanban.cols.push(col); newCards += col.cards.length; }
+      else {
+        col.cards.forEach(card => {
+          if (!existing.cards.find(c => c.id === card.id)) { existing.cards.push(card); newCards++; }
+        });
+      }
+    });
+  }
+
+  save(); renderNotesList(); renderTagsSidebar(); updateCounts();
+  if (currentView === 'kanban') renderKanban();
+
+  const detail = `${newNotes} notas novas${newCards > 0 ? ` · ${newCards} cards novos` : ''}`;
+  showBackupStatus(`✅ Restaurado! ${detail}`, 'success');
+  setTimeout(() => { closeGdriveModal(); toast(msg); }, 1800);
+}
+
+function showBackupStatus(msg, type) {
+  const el = document.getElementById('backup-status');
+  el.style.display = 'block';
+  const colors = {
+    error: 'rgba(248,113,113,.12)',
+    success: 'rgba(110,231,183,.12)',
+    loading: 'rgba(129,140,248,.12)'
+  };
+  const borders = {
+    error: 'rgba(248,113,113,.3)',
+    success: 'rgba(110,231,183,.3)',
+    loading: 'rgba(129,140,248,.3)'
+  };
+  el.style.background = colors[type] || colors.loading;
+  el.style.border = `1px solid ${borders[type] || borders.loading}`;
+  el.style.color = type === 'error' ? 'var(--danger)' : type === 'success' ? 'var(--accent)' : 'var(--accent2)';
+  el.textContent = msg;
+}
+
+// Keep importJSON as alias (not used by UI anymore)
+function importJSON() {}
 
 // ═══════════════════════════════════
 //  AUDIO
@@ -2118,6 +2551,125 @@ async function callAI(prompt){const{provider='groq',key,model}=aiConfig;let url,
 function showAiPanel(label,loading){document.getElementById('ai-panel-label').textContent=label;document.getElementById('ai-content').innerHTML=loading?'<div class="ai-loading"><div class="spinner"></div> Processando...</div>':'';document.getElementById('ai-panel').classList.add('open');}
 function closeAiPanel(){document.getElementById('ai-panel').classList.remove('open');}
 function copyAiContent(){navigator.clipboard.writeText(document.getElementById('ai-content').textContent).then(()=>toast('📋 Copiado!'));}
+
+
+// ═══════════════════════════════════
+//  PWA — SERVICE WORKER & INSTALL
+// ═══════════════════════════════════
+let pwaInstallEvent = null;
+
+// Register inline Service Worker for offline support
+(function registerSW() {
+  if (!('serviceWorker' in navigator)) return;
+
+  const swCode = `
+const CACHE = 'sc-pro-v1';
+const ASSETS = []; // single HTML file — nothing to pre-cache
+
+self.addEventListener('install', e => {
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+    )
+  );
+  self.clients.claim();
+});
+
+// Network-first for navigation, cache-first for assets
+self.addEventListener('fetch', e => {
+  if (e.request.mode === 'navigate') {
+    e.respondWith(
+      fetch(e.request).catch(() => caches.match(e.request))
+    );
+  } else {
+    e.respondWith(
+      caches.match(e.request).then(cached => cached || fetch(e.request))
+    );
+  }
+});
+`;
+
+  const blob = new Blob([swCode], { type: 'application/javascript' });
+  const swUrl = URL.createObjectURL(blob);
+  navigator.serviceWorker.register(swUrl, { scope: './' })
+    .then(reg => {
+      console.log('[SC] Service Worker registrado:', reg.scope);
+    })
+    .catch(err => {
+      // SW via blob may be blocked in some browsers — silently fail
+      console.log('[SC] SW não suportado neste contexto:', err.message);
+    });
+})();
+
+// ── INSTALL PROMPT (Chrome/Edge/Android) ──
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  pwaInstallEvent = e;
+  // Show banner after 3s if not dismissed before
+  if (!localStorage.getItem('sc_pwa_dismissed')) {
+    setTimeout(() => {
+      document.getElementById('pwa-banner').classList.add('show');
+    }, 3000);
+  }
+});
+
+window.addEventListener('appinstalled', () => {
+  document.getElementById('pwa-banner').classList.remove('show');
+  pwaInstallEvent = null;
+  toast('✅ App instalado com sucesso!');
+  localStorage.setItem('sc_pwa_installed', '1');
+});
+
+function triggerInstall() {
+  if (pwaInstallEvent) {
+    pwaInstallEvent.prompt();
+    pwaInstallEvent.userChoice.then(choice => {
+      if (choice.outcome === 'accepted') {
+        dismissPwaBanner();
+        toast('🎉 Instalando Segundo Cérebro...');
+      }
+      pwaInstallEvent = null;
+    });
+  } else {
+    // iOS Safari or browser that doesn't support beforeinstallprompt
+    const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    if (isIOS) {
+      showIosHint();
+    } else {
+      // Desktop: show instructions
+      toast('💡 No Chrome/Edge: Menu (⋮) → "Instalar Segundo Cérebro"', 5000);
+    }
+    dismissPwaBanner();
+  }
+}
+
+function dismissPwaBanner() {
+  document.getElementById('pwa-banner').classList.remove('show');
+  localStorage.setItem('sc_pwa_dismissed', '1');
+}
+
+function showIosHint() {
+  document.getElementById('ios-hint').classList.add('show');
+}
+function closeIosHint() {
+  document.getElementById('ios-hint').classList.remove('show');
+}
+
+// ── iOS: auto show hint on load (Safari) ──
+(function checkIOS() {
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent.toLowerCase());
+  const isInStandaloneMode = window.navigator.standalone === true;
+  const dismissed = localStorage.getItem('sc_pwa_dismissed');
+  if (isIOS && !isInStandaloneMode && !dismissed) {
+    setTimeout(() => {
+      document.getElementById('pwa-banner').classList.add('show');
+    }, 4000);
+  }
+})();
 
 // ═══════════════════════════════════
 //  TOAST
